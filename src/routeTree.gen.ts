@@ -20,6 +20,7 @@ import { Route as CuentaPagosRouteImport } from './routes/cuenta.pagos'
 import { Route as CuentaHistorialRouteImport } from './routes/cuenta.historial'
 import { Route as CuentaFavoritosRouteImport } from './routes/cuenta.favoritos'
 import { Route as CuentaDatosRouteImport } from './routes/cuenta.datos'
+import { Route as CuentaCreditosRouteImport } from './routes/cuenta.creditos'
 import { Route as CuentaBoletosRouteImport } from './routes/cuenta.boletos'
 
 const GraciasRoute = GraciasRouteImport.update({
@@ -77,6 +78,11 @@ const CuentaDatosRoute = CuentaDatosRouteImport.update({
   path: '/datos',
   getParentRoute: () => CuentaRoute,
 } as any)
+const CuentaCreditosRoute = CuentaCreditosRouteImport.update({
+  id: '/creditos',
+  path: '/creditos',
+  getParentRoute: () => CuentaRoute,
+} as any)
 const CuentaBoletosRoute = CuentaBoletosRouteImport.update({
   id: '/boletos',
   path: '/boletos',
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
   '/cuenta/boletos': typeof CuentaBoletosRoute
+  '/cuenta/creditos': typeof CuentaCreditosRoute
   '/cuenta/datos': typeof CuentaDatosRoute
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
   '/cuenta/boletos': typeof CuentaBoletosRoute
+  '/cuenta/creditos': typeof CuentaCreditosRoute
   '/cuenta/datos': typeof CuentaDatosRoute
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
   '/cuenta/boletos': typeof CuentaBoletosRoute
+  '/cuenta/creditos': typeof CuentaCreditosRoute
   '/cuenta/datos': typeof CuentaDatosRoute
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/cuenta'
     | '/gracias'
     | '/cuenta/boletos'
+    | '/cuenta/creditos'
     | '/cuenta/datos'
     | '/cuenta/favoritos'
     | '/cuenta/historial'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/cuenta'
     | '/gracias'
     | '/cuenta/boletos'
+    | '/cuenta/creditos'
     | '/cuenta/datos'
     | '/cuenta/favoritos'
     | '/cuenta/historial'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/cuenta'
     | '/gracias'
     | '/cuenta/boletos'
+    | '/cuenta/creditos'
     | '/cuenta/datos'
     | '/cuenta/favoritos'
     | '/cuenta/historial'
@@ -259,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CuentaDatosRouteImport
       parentRoute: typeof CuentaRoute
     }
+    '/cuenta/creditos': {
+      id: '/cuenta/creditos'
+      path: '/creditos'
+      fullPath: '/cuenta/creditos'
+      preLoaderRoute: typeof CuentaCreditosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
     '/cuenta/boletos': {
       id: '/cuenta/boletos'
       path: '/boletos'
@@ -271,6 +290,7 @@ declare module '@tanstack/react-router' {
 
 interface CuentaRouteChildren {
   CuentaBoletosRoute: typeof CuentaBoletosRoute
+  CuentaCreditosRoute: typeof CuentaCreditosRoute
   CuentaDatosRoute: typeof CuentaDatosRoute
   CuentaFavoritosRoute: typeof CuentaFavoritosRoute
   CuentaHistorialRoute: typeof CuentaHistorialRoute
@@ -280,6 +300,7 @@ interface CuentaRouteChildren {
 
 const CuentaRouteChildren: CuentaRouteChildren = {
   CuentaBoletosRoute: CuentaBoletosRoute,
+  CuentaCreditosRoute: CuentaCreditosRoute,
   CuentaDatosRoute: CuentaDatosRoute,
   CuentaFavoritosRoute: CuentaFavoritosRoute,
   CuentaHistorialRoute: CuentaHistorialRoute,
