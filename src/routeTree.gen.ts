@@ -15,8 +15,11 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventoCaifanesReunionRouteImport } from './routes/evento.caifanes-reunion'
+import { Route as CuentaWhatsappRouteImport } from './routes/cuenta.whatsapp'
+import { Route as CuentaRedesRouteImport } from './routes/cuenta.redes'
 import { Route as CuentaPasadosRouteImport } from './routes/cuenta.pasados'
 import { Route as CuentaPagosRouteImport } from './routes/cuenta.pagos'
+import { Route as CuentaNotificacionesRouteImport } from './routes/cuenta.notificaciones'
 import { Route as CuentaIdiomaRouteImport } from './routes/cuenta.idioma'
 import { Route as CuentaHistorialRouteImport } from './routes/cuenta.historial'
 import { Route as CuentaFavoritosRouteImport } from './routes/cuenta.favoritos'
@@ -55,6 +58,16 @@ const EventoCaifanesReunionRoute = EventoCaifanesReunionRouteImport.update({
   path: '/evento/caifanes-reunion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CuentaWhatsappRoute = CuentaWhatsappRouteImport.update({
+  id: '/whatsapp',
+  path: '/whatsapp',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaRedesRoute = CuentaRedesRouteImport.update({
+  id: '/redes',
+  path: '/redes',
+  getParentRoute: () => CuentaRoute,
+} as any)
 const CuentaPasadosRoute = CuentaPasadosRouteImport.update({
   id: '/pasados',
   path: '/pasados',
@@ -63,6 +76,11 @@ const CuentaPasadosRoute = CuentaPasadosRouteImport.update({
 const CuentaPagosRoute = CuentaPagosRouteImport.update({
   id: '/pagos',
   path: '/pagos',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaNotificacionesRoute = CuentaNotificacionesRouteImport.update({
+  id: '/notificaciones',
+  path: '/notificaciones',
   getParentRoute: () => CuentaRoute,
 } as any)
 const CuentaIdiomaRoute = CuentaIdiomaRouteImport.update({
@@ -114,8 +132,11 @@ export interface FileRoutesByFullPath {
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
   '/cuenta/idioma': typeof CuentaIdiomaRoute
+  '/cuenta/notificaciones': typeof CuentaNotificacionesRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
+  '/cuenta/redes': typeof CuentaRedesRoute
+  '/cuenta/whatsapp': typeof CuentaWhatsappRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRoutesByTo {
@@ -131,8 +152,11 @@ export interface FileRoutesByTo {
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
   '/cuenta/idioma': typeof CuentaIdiomaRoute
+  '/cuenta/notificaciones': typeof CuentaNotificacionesRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
+  '/cuenta/redes': typeof CuentaRedesRoute
+  '/cuenta/whatsapp': typeof CuentaWhatsappRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRoutesById {
@@ -149,8 +173,11 @@ export interface FileRoutesById {
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
   '/cuenta/idioma': typeof CuentaIdiomaRoute
+  '/cuenta/notificaciones': typeof CuentaNotificacionesRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
+  '/cuenta/redes': typeof CuentaRedesRoute
+  '/cuenta/whatsapp': typeof CuentaWhatsappRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRouteTypes {
@@ -168,8 +195,11 @@ export interface FileRouteTypes {
     | '/cuenta/favoritos'
     | '/cuenta/historial'
     | '/cuenta/idioma'
+    | '/cuenta/notificaciones'
     | '/cuenta/pagos'
     | '/cuenta/pasados'
+    | '/cuenta/redes'
+    | '/cuenta/whatsapp'
     | '/evento/caifanes-reunion'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -185,8 +215,11 @@ export interface FileRouteTypes {
     | '/cuenta/favoritos'
     | '/cuenta/historial'
     | '/cuenta/idioma'
+    | '/cuenta/notificaciones'
     | '/cuenta/pagos'
     | '/cuenta/pasados'
+    | '/cuenta/redes'
+    | '/cuenta/whatsapp'
     | '/evento/caifanes-reunion'
   id:
     | '__root__'
@@ -202,8 +235,11 @@ export interface FileRouteTypes {
     | '/cuenta/favoritos'
     | '/cuenta/historial'
     | '/cuenta/idioma'
+    | '/cuenta/notificaciones'
     | '/cuenta/pagos'
     | '/cuenta/pasados'
+    | '/cuenta/redes'
+    | '/cuenta/whatsapp'
     | '/evento/caifanes-reunion'
   fileRoutesById: FileRoutesById
 }
@@ -260,6 +296,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventoCaifanesReunionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cuenta/whatsapp': {
+      id: '/cuenta/whatsapp'
+      path: '/whatsapp'
+      fullPath: '/cuenta/whatsapp'
+      preLoaderRoute: typeof CuentaWhatsappRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/redes': {
+      id: '/cuenta/redes'
+      path: '/redes'
+      fullPath: '/cuenta/redes'
+      preLoaderRoute: typeof CuentaRedesRouteImport
+      parentRoute: typeof CuentaRoute
+    }
     '/cuenta/pasados': {
       id: '/cuenta/pasados'
       path: '/pasados'
@@ -272,6 +322,13 @@ declare module '@tanstack/react-router' {
       path: '/pagos'
       fullPath: '/cuenta/pagos'
       preLoaderRoute: typeof CuentaPagosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/notificaciones': {
+      id: '/cuenta/notificaciones'
+      path: '/notificaciones'
+      fullPath: '/cuenta/notificaciones'
+      preLoaderRoute: typeof CuentaNotificacionesRouteImport
       parentRoute: typeof CuentaRoute
     }
     '/cuenta/idioma': {
@@ -334,8 +391,11 @@ interface CuentaRouteChildren {
   CuentaFavoritosRoute: typeof CuentaFavoritosRoute
   CuentaHistorialRoute: typeof CuentaHistorialRoute
   CuentaIdiomaRoute: typeof CuentaIdiomaRoute
+  CuentaNotificacionesRoute: typeof CuentaNotificacionesRoute
   CuentaPagosRoute: typeof CuentaPagosRoute
   CuentaPasadosRoute: typeof CuentaPasadosRoute
+  CuentaRedesRoute: typeof CuentaRedesRoute
+  CuentaWhatsappRoute: typeof CuentaWhatsappRoute
 }
 
 const CuentaRouteChildren: CuentaRouteChildren = {
@@ -346,8 +406,11 @@ const CuentaRouteChildren: CuentaRouteChildren = {
   CuentaFavoritosRoute: CuentaFavoritosRoute,
   CuentaHistorialRoute: CuentaHistorialRoute,
   CuentaIdiomaRoute: CuentaIdiomaRoute,
+  CuentaNotificacionesRoute: CuentaNotificacionesRoute,
   CuentaPagosRoute: CuentaPagosRoute,
   CuentaPasadosRoute: CuentaPasadosRoute,
+  CuentaRedesRoute: CuentaRedesRoute,
+  CuentaWhatsappRoute: CuentaWhatsappRoute,
 }
 
 const CuentaRouteWithChildren =
