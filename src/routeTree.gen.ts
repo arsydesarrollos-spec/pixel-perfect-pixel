@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VenderRouteImport } from './routes/vender'
+import { Route as ReventaRouteImport } from './routes/reventa'
 import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as CuentaRouteImport } from './routes/cuenta'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -16,6 +18,7 @@ import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventoCaifanesReunionRouteImport } from './routes/evento.caifanes-reunion'
 import { Route as CuentaWhatsappRouteImport } from './routes/cuenta.whatsapp'
+import { Route as CuentaVentasRouteImport } from './routes/cuenta.ventas'
 import { Route as CuentaRedesRouteImport } from './routes/cuenta.redes'
 import { Route as CuentaPasadosRouteImport } from './routes/cuenta.pasados'
 import { Route as CuentaPagosRouteImport } from './routes/cuenta.pagos'
@@ -28,6 +31,16 @@ import { Route as CuentaDatosRouteImport } from './routes/cuenta.datos'
 import { Route as CuentaCreditosRouteImport } from './routes/cuenta.creditos'
 import { Route as CuentaBoletosRouteImport } from './routes/cuenta.boletos'
 
+const VenderRoute = VenderRouteImport.update({
+  id: '/vender',
+  path: '/vender',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReventaRoute = ReventaRouteImport.update({
+  id: '/reventa',
+  path: '/reventa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GraciasRoute = GraciasRouteImport.update({
   id: '/gracias',
   path: '/gracias',
@@ -57,6 +70,11 @@ const EventoCaifanesReunionRoute = EventoCaifanesReunionRouteImport.update({
   id: '/evento/caifanes-reunion',
   path: '/evento/caifanes-reunion',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CuentaVentasRoute = CuentaVentasRouteImport.update({
+  id: '/ventas',
+  path: '/ventas',
+  getParentRoute: () => CuentaRoute,
 } as any)
 const CuentaWhatsappRoute = CuentaWhatsappRouteImport.update({
   id: '/whatsapp',
@@ -125,6 +143,12 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
+  '/reventa': typeof ReventaRoute
+  '/vender': typeof VenderRoute
+  '/reventa': typeof ReventaRoute
+  '/vender': typeof VenderRoute
+  '/reventa': typeof ReventaRoute
+  '/vender': typeof VenderRoute
   '/cuenta/boletos': typeof CuentaBoletosRoute
   '/cuenta/creditos': typeof CuentaCreditosRoute
   '/cuenta/datos': typeof CuentaDatosRoute
@@ -136,6 +160,9 @@ export interface FileRoutesByFullPath {
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
   '/cuenta/redes': typeof CuentaRedesRoute
+  '/cuenta/ventas': typeof CuentaVentasRoute
+  '/cuenta/ventas': typeof CuentaVentasRoute
+  '/cuenta/ventas': typeof CuentaVentasRoute
   '/cuenta/whatsapp': typeof CuentaWhatsappRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
@@ -188,6 +215,8 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/cuenta'
     | '/gracias'
+    | '/reventa'
+    | '/vender'
     | '/cuenta/boletos'
     | '/cuenta/creditos'
     | '/cuenta/datos'
@@ -199,6 +228,7 @@ export interface FileRouteTypes {
     | '/cuenta/pagos'
     | '/cuenta/pasados'
     | '/cuenta/redes'
+    | '/cuenta/ventas'
     | '/cuenta/whatsapp'
     | '/evento/caifanes-reunion'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +238,8 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/cuenta'
     | '/gracias'
+    | '/reventa'
+    | '/vender'
     | '/cuenta/boletos'
     | '/cuenta/creditos'
     | '/cuenta/datos'
@@ -219,6 +251,7 @@ export interface FileRouteTypes {
     | '/cuenta/pagos'
     | '/cuenta/pasados'
     | '/cuenta/redes'
+    | '/cuenta/ventas'
     | '/cuenta/whatsapp'
     | '/evento/caifanes-reunion'
   id:
@@ -228,6 +261,8 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/cuenta'
     | '/gracias'
+    | '/reventa'
+    | '/vender'
     | '/cuenta/boletos'
     | '/cuenta/creditos'
     | '/cuenta/datos'
@@ -239,6 +274,7 @@ export interface FileRouteTypes {
     | '/cuenta/pagos'
     | '/cuenta/pasados'
     | '/cuenta/redes'
+    | '/cuenta/ventas'
     | '/cuenta/whatsapp'
     | '/evento/caifanes-reunion'
   fileRoutesById: FileRoutesById
@@ -249,11 +285,27 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   CuentaRoute: typeof CuentaRouteWithChildren
   GraciasRoute: typeof GraciasRoute
+  ReventaRoute: typeof ReventaRoute
+  VenderRoute: typeof VenderRoute
   EventoCaifanesReunionRoute: typeof EventoCaifanesReunionRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vender': {
+      id: '/vender'
+      path: '/vender'
+      fullPath: '/vender'
+      preLoaderRoute: typeof VenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reventa': {
+      id: '/reventa'
+      path: '/reventa'
+      fullPath: '/reventa'
+      preLoaderRoute: typeof ReventaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gracias': {
       id: '/gracias'
       path: '/gracias'
@@ -295,6 +347,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/evento/caifanes-reunion'
       preLoaderRoute: typeof EventoCaifanesReunionRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/cuenta/ventas': {
+      id: '/cuenta/ventas'
+      path: '/ventas'
+      fullPath: '/cuenta/ventas'
+      preLoaderRoute: typeof CuentaVentasRouteImport
+      parentRoute: typeof CuentaRoute
     }
     '/cuenta/whatsapp': {
       id: '/cuenta/whatsapp'
@@ -395,6 +454,7 @@ interface CuentaRouteChildren {
   CuentaPagosRoute: typeof CuentaPagosRoute
   CuentaPasadosRoute: typeof CuentaPasadosRoute
   CuentaRedesRoute: typeof CuentaRedesRoute
+  CuentaVentasRoute: typeof CuentaVentasRoute
   CuentaWhatsappRoute: typeof CuentaWhatsappRoute
 }
 
@@ -410,6 +470,7 @@ const CuentaRouteChildren: CuentaRouteChildren = {
   CuentaPagosRoute: CuentaPagosRoute,
   CuentaPasadosRoute: CuentaPasadosRoute,
   CuentaRedesRoute: CuentaRedesRoute,
+  CuentaVentasRoute: CuentaVentasRoute,
   CuentaWhatsappRoute: CuentaWhatsappRoute,
 }
 
@@ -422,6 +483,8 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   CuentaRoute: CuentaRouteWithChildren,
   GraciasRoute: GraciasRoute,
+  ReventaRoute: ReventaRoute,
+  VenderRoute: VenderRoute,
   EventoCaifanesReunionRoute: EventoCaifanesReunionRoute,
 }
 export const routeTree = rootRouteImport
