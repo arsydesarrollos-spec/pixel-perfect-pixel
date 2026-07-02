@@ -611,9 +611,9 @@ function SellBanner() {
             <h2 className="text-3xl md:text-4xl font-extrabold text-white">¿Tienes boletos que no puedes usar?</h2>
             <p className="text-white/90 mt-2">Vende de forma segura a millones de compradores. Sin complicaciones.</p>
           </div>
-          <button className="px-6 py-3 rounded-xl bg-white text-black font-bold hover:scale-105 transition shrink-0">
-            Vender mis boletos
-          </button>
+         <Link to="/vender" className="px-6 py-3 rounded-xl bg-white text-black font-bold hover:scale-105 transition shrink-0">
+  Vender mis boletos
+</Link>
         </div>
       </div>
     </section>
