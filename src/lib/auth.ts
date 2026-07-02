@@ -56,9 +56,11 @@ let runtimeUsers: MockUser[] = [...mockUsers];
 
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setUser(read());
+    setReady(true);
     const h = () => setUser(read());
     window.addEventListener(EVT, h);
     window.addEventListener("storage", h);
