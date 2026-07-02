@@ -18,20 +18,20 @@ const TABS = [
 ] as const;
 
 function CuentaLayout() {
-  const { user, logout } = useAuth();
+  const { user, ready, logout } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   // Route guard: no session -> bounce home and pop the login modal open.
   useEffect(() => {
-    if (!user) {
+    if (ready && !user) {
       navigate({ to: "/" });
       requestLogin();
       toast.error("Inicia sesión para ver tu cuenta");
     }
-  }, [user, navigate]);
+  }, [ready, user, navigate]);
 
-  if (!user) return null;
+  if (!ready || !user) return null;
 
   return (
     <div className="min-h-screen bg-app text-white">
