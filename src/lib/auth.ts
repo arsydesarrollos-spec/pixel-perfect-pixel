@@ -8,6 +8,10 @@ export type AuthUser = {
   email: string;
   phone: string;
   isAdmin?: boolean;
+  photo?: string;
+  address?: string;
+  location?: string;
+  credits?: number;
 };
 
 type AuthResult = { success: true; user: AuthUser } | { success: false; error: string };
@@ -17,7 +21,6 @@ const EVT = "ft_auth_change";
 const OPEN_LOGIN_EVT = "ft_open_login";
 
 function toAuthUser(u: MockUser): AuthUser {
-  // Strip the password before it ever touches client state/storage.
   const { password: _password, ...safe } = u;
   return safe;
 }
@@ -33,14 +36,19 @@ function readFrom(storage: Storage): AuthUser | null {
 
 function read(): AuthUser | null {
   if (typeof window === "undefined") return null;
-  // localStorage (remembered sessions) takes priority, then sessionStorage (this-tab-only sessions).
   return readFrom(localStorage) ?? readFrom(sessionStorage);
+}
+
+// Returns whichever storage currently holds the session, or null if none does.
+function currentStorage(): Storage | null {
+  if (typeof window === "undefined") return null;
+  if (localStorage.getItem(KEY)) return localStorage;
+  if (sessionStorage.getItem(KEY)) return sessionStorage;
+  return null;
 }
 
 function write(user: AuthUser | null, rememberMe: boolean) {
   if (typeof window === "undefined") return;
-  // Always clear both first so a fresh login/register never leaves a stale
-  // copy behind in the storage it did NOT choose this time.
   localStorage.removeItem(KEY);
   sessionStorage.removeItem(KEY);
   if (user) {
@@ -49,9 +57,14 @@ function write(user: AuthUser | null, rememberMe: boolean) {
   window.dispatchEvent(new Event(EVT));
 }
 
-// In-memory registry so newly registered users can log back in during this session.
-// Swap this whole file's internals for real API calls once a backend exists —
-// the useAuth() hook's public shape below should not need to change.
+// Persist updates back to whichever storage already holds the session.
+function writeIntoExisting(user: AuthUser) {
+  if (typeof window === "undefined") return;
+  const target = currentStorage() ?? sessionStorage;
+  target.setItem(KEY, JSON.stringify(user));
+  window.dispatchEvent(new Event(EVT));
+}
+
 let runtimeUsers: MockUser[] = [...mockUsers];
 
 export function useAuth() {
@@ -99,6 +112,7 @@ export function useAuth() {
         email: email.trim(),
         password,
         phone: phone.trim(),
+        credits: 0,
       };
       runtimeUsers = [...runtimeUsers, newUser];
       const safe = toAuthUser(newUser);
@@ -106,12 +120,20 @@ export function useAuth() {
       return { success: true, user: safe };
     },
 
+    // Merge and persist partial changes onto the current session.
+    updateUser: (patch: Partial<AuthUser>) => {
+      const current = read();
+      if (!current) return;
+      const next: AuthUser = { ...current, ...patch };
+      // Mirror into the runtime user list too, so mock queries stay consistent.
+      runtimeUsers = runtimeUsers.map((u) => (u.email === current.email ? { ...u, ...patch } : u));
+      writeIntoExisting(next);
+    },
+
     logout: () => write(null, false),
   };
 }
 
-// Lets any component (e.g. a route guard) request that the login modal open,
-// without needing to lift showLogin state up to a shared parent.
 export function requestLogin() {
   if (typeof window !== "undefined") window.dispatchEvent(new Event(OPEN_LOGIN_EVT));
 }
