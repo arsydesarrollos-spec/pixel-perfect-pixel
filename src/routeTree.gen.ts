@@ -15,6 +15,7 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventoCaifanesReunionRouteImport } from './routes/evento.caifanes-reunion'
+import { Route as CuentaPasadosRouteImport } from './routes/cuenta.pasados'
 import { Route as CuentaPagosRouteImport } from './routes/cuenta.pagos'
 import { Route as CuentaHistorialRouteImport } from './routes/cuenta.historial'
 import { Route as CuentaFavoritosRouteImport } from './routes/cuenta.favoritos'
@@ -50,6 +51,11 @@ const EventoCaifanesReunionRoute = EventoCaifanesReunionRouteImport.update({
   id: '/evento/caifanes-reunion',
   path: '/evento/caifanes-reunion',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CuentaPasadosRoute = CuentaPasadosRouteImport.update({
+  id: '/pasados',
+  path: '/pasados',
+  getParentRoute: () => CuentaRoute,
 } as any)
 const CuentaPagosRoute = CuentaPagosRouteImport.update({
   id: '/pagos',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
+  '/cuenta/pasados': typeof CuentaPasadosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRoutesByTo {
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
+  '/cuenta/pasados': typeof CuentaPasadosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRoutesById {
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
+  '/cuenta/pasados': typeof CuentaPasadosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRouteTypes {
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/cuenta/favoritos'
     | '/cuenta/historial'
     | '/cuenta/pagos'
+    | '/cuenta/pasados'
     | '/evento/caifanes-reunion'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/cuenta/favoritos'
     | '/cuenta/historial'
     | '/cuenta/pagos'
+    | '/cuenta/pasados'
     | '/evento/caifanes-reunion'
   id:
     | '__root__'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/cuenta/favoritos'
     | '/cuenta/historial'
     | '/cuenta/pagos'
+    | '/cuenta/pasados'
     | '/evento/caifanes-reunion'
   fileRoutesById: FileRoutesById
 }
@@ -212,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventoCaifanesReunionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cuenta/pasados': {
+      id: '/cuenta/pasados'
+      path: '/pasados'
+      fullPath: '/cuenta/pasados'
+      preLoaderRoute: typeof CuentaPasadosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
     '/cuenta/pagos': {
       id: '/cuenta/pagos'
       path: '/pagos'
@@ -256,6 +275,7 @@ interface CuentaRouteChildren {
   CuentaFavoritosRoute: typeof CuentaFavoritosRoute
   CuentaHistorialRoute: typeof CuentaHistorialRoute
   CuentaPagosRoute: typeof CuentaPagosRoute
+  CuentaPasadosRoute: typeof CuentaPasadosRoute
 }
 
 const CuentaRouteChildren: CuentaRouteChildren = {
@@ -264,6 +284,7 @@ const CuentaRouteChildren: CuentaRouteChildren = {
   CuentaFavoritosRoute: CuentaFavoritosRoute,
   CuentaHistorialRoute: CuentaHistorialRoute,
   CuentaPagosRoute: CuentaPagosRoute,
+  CuentaPasadosRoute: CuentaPasadosRoute,
 }
 
 const CuentaRouteWithChildren =
