@@ -72,6 +72,7 @@ export function useAuth() {
 
   return {
     user,
+    ready,
 
     login: (email: string, password: string, rememberMe: boolean): AuthResult => {
       const found = runtimeUsers.find(
