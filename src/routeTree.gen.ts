@@ -10,14 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as GraciasRouteImport } from './routes/gracias'
+import { Route as CuentaRouteImport } from './routes/cuenta'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventoCaifanesReunionRouteImport } from './routes/evento.caifanes-reunion'
+import { Route as CuentaPagosRouteImport } from './routes/cuenta.pagos'
+import { Route as CuentaHistorialRouteImport } from './routes/cuenta.historial'
+import { Route as CuentaFavoritosRouteImport } from './routes/cuenta.favoritos'
+import { Route as CuentaDatosRouteImport } from './routes/cuenta.datos'
+import { Route as CuentaBoletosRouteImport } from './routes/cuenta.boletos'
 
 const GraciasRoute = GraciasRouteImport.update({
   id: '/gracias',
   path: '/gracias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuentaRoute = CuentaRouteImport.update({
+  id: '/cuenta',
+  path: '/cuenta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -40,19 +51,56 @@ const EventoCaifanesReunionRoute = EventoCaifanesReunionRouteImport.update({
   path: '/evento/caifanes-reunion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CuentaPagosRoute = CuentaPagosRouteImport.update({
+  id: '/pagos',
+  path: '/pagos',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaHistorialRoute = CuentaHistorialRouteImport.update({
+  id: '/historial',
+  path: '/historial',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaFavoritosRoute = CuentaFavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaDatosRoute = CuentaDatosRouteImport.update({
+  id: '/datos',
+  path: '/datos',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaBoletosRoute = CuentaBoletosRouteImport.update({
+  id: '/boletos',
+  path: '/boletos',
+  getParentRoute: () => CuentaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
   '/checkout': typeof CheckoutRoute
+  '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
+  '/cuenta/boletos': typeof CuentaBoletosRoute
+  '/cuenta/datos': typeof CuentaDatosRoute
+  '/cuenta/favoritos': typeof CuentaFavoritosRoute
+  '/cuenta/historial': typeof CuentaHistorialRoute
+  '/cuenta/pagos': typeof CuentaPagosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
   '/checkout': typeof CheckoutRoute
+  '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
+  '/cuenta/boletos': typeof CuentaBoletosRoute
+  '/cuenta/datos': typeof CuentaDatosRoute
+  '/cuenta/favoritos': typeof CuentaFavoritosRoute
+  '/cuenta/historial': typeof CuentaHistorialRoute
+  '/cuenta/pagos': typeof CuentaPagosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRoutesById {
@@ -60,7 +108,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
   '/checkout': typeof CheckoutRoute
+  '/cuenta': typeof CuentaRouteWithChildren
   '/gracias': typeof GraciasRoute
+  '/cuenta/boletos': typeof CuentaBoletosRoute
+  '/cuenta/datos': typeof CuentaDatosRoute
+  '/cuenta/favoritos': typeof CuentaFavoritosRoute
+  '/cuenta/historial': typeof CuentaHistorialRoute
+  '/cuenta/pagos': typeof CuentaPagosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
 }
 export interface FileRouteTypes {
@@ -69,16 +123,39 @@ export interface FileRouteTypes {
     | '/'
     | '/carrito'
     | '/checkout'
+    | '/cuenta'
     | '/gracias'
+    | '/cuenta/boletos'
+    | '/cuenta/datos'
+    | '/cuenta/favoritos'
+    | '/cuenta/historial'
+    | '/cuenta/pagos'
     | '/evento/caifanes-reunion'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carrito' | '/checkout' | '/gracias' | '/evento/caifanes-reunion'
+  to:
+    | '/'
+    | '/carrito'
+    | '/checkout'
+    | '/cuenta'
+    | '/gracias'
+    | '/cuenta/boletos'
+    | '/cuenta/datos'
+    | '/cuenta/favoritos'
+    | '/cuenta/historial'
+    | '/cuenta/pagos'
+    | '/evento/caifanes-reunion'
   id:
     | '__root__'
     | '/'
     | '/carrito'
     | '/checkout'
+    | '/cuenta'
     | '/gracias'
+    | '/cuenta/boletos'
+    | '/cuenta/datos'
+    | '/cuenta/favoritos'
+    | '/cuenta/historial'
+    | '/cuenta/pagos'
     | '/evento/caifanes-reunion'
   fileRoutesById: FileRoutesById
 }
@@ -86,6 +163,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CarritoRoute: typeof CarritoRoute
   CheckoutRoute: typeof CheckoutRoute
+  CuentaRoute: typeof CuentaRouteWithChildren
   GraciasRoute: typeof GraciasRoute
   EventoCaifanesReunionRoute: typeof EventoCaifanesReunionRoute
 }
@@ -97,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/gracias'
       fullPath: '/gracias'
       preLoaderRoute: typeof GraciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cuenta': {
+      id: '/cuenta'
+      path: '/cuenta'
+      fullPath: '/cuenta'
+      preLoaderRoute: typeof CuentaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -127,13 +212,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventoCaifanesReunionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cuenta/pagos': {
+      id: '/cuenta/pagos'
+      path: '/pagos'
+      fullPath: '/cuenta/pagos'
+      preLoaderRoute: typeof CuentaPagosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/historial': {
+      id: '/cuenta/historial'
+      path: '/historial'
+      fullPath: '/cuenta/historial'
+      preLoaderRoute: typeof CuentaHistorialRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/favoritos': {
+      id: '/cuenta/favoritos'
+      path: '/favoritos'
+      fullPath: '/cuenta/favoritos'
+      preLoaderRoute: typeof CuentaFavoritosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/datos': {
+      id: '/cuenta/datos'
+      path: '/datos'
+      fullPath: '/cuenta/datos'
+      preLoaderRoute: typeof CuentaDatosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/boletos': {
+      id: '/cuenta/boletos'
+      path: '/boletos'
+      fullPath: '/cuenta/boletos'
+      preLoaderRoute: typeof CuentaBoletosRouteImport
+      parentRoute: typeof CuentaRoute
+    }
   }
 }
+
+interface CuentaRouteChildren {
+  CuentaBoletosRoute: typeof CuentaBoletosRoute
+  CuentaDatosRoute: typeof CuentaDatosRoute
+  CuentaFavoritosRoute: typeof CuentaFavoritosRoute
+  CuentaHistorialRoute: typeof CuentaHistorialRoute
+  CuentaPagosRoute: typeof CuentaPagosRoute
+}
+
+const CuentaRouteChildren: CuentaRouteChildren = {
+  CuentaBoletosRoute: CuentaBoletosRoute,
+  CuentaDatosRoute: CuentaDatosRoute,
+  CuentaFavoritosRoute: CuentaFavoritosRoute,
+  CuentaHistorialRoute: CuentaHistorialRoute,
+  CuentaPagosRoute: CuentaPagosRoute,
+}
+
+const CuentaRouteWithChildren =
+  CuentaRoute._addFileChildren(CuentaRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CarritoRoute: CarritoRoute,
   CheckoutRoute: CheckoutRoute,
+  CuentaRoute: CuentaRouteWithChildren,
   GraciasRoute: GraciasRoute,
   EventoCaifanesReunionRoute: EventoCaifanesReunionRoute,
 }
