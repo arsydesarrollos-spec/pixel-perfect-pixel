@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
+import { useAuth, useOpenLoginListener } from "@/lib/auth";
 import {
   Search, Heart, MapPin, Calendar, Building2, X, ChevronLeft, ChevronRight,
   Instagram, Facebook, Youtube, Twitter, Music2, Lock, ShieldCheck, Zap, Trophy,
@@ -23,12 +24,6 @@ import nbViveLatino from "@/assets/nearby-vivelatino.jpg";
 import nbCaifanes from "@/assets/nearby-caifanes.webp";
 import nbPumas from "@/assets/nearby-pumas.jpg";
 import nbCafeTacuba from "@/assets/nearby-cafetacuba.png";
-import badgeAppleBlack from "@/assets/badge-apple-black.png";
-import badgeGoogleBlack from "@/assets/badge-google-black.png";
-import badgeAppleWhite from "@/assets/badge-apple-white.png";
-import badgeGoogleWhite from "@/assets/badge-google-white.png";
-import { useAuth, type AuthUser } from "@/lib/auth";
-
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -127,8 +122,7 @@ const countries = [
 
 // ---------- MAIN ----------
 function Index() {
-  const auth = useAuth();
-  const user = auth.user;
+  const { user, logout } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
@@ -139,6 +133,8 @@ function Index() {
   const [activeCat, setActiveCat] = useState("Conciertos");
   const [events, setEvents] = useState<Event[]>(initialEvents);
   const [stats, setStats] = useState({ tickets: "+2M", countries: "160+", guarantee: "100%", commission: "15%" });
+
+  useOpenLoginListener(() => setShowLogin(true));
 
   const toggleFav = (id: string) => {
     setFavorites((prev) => {
@@ -165,7 +161,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-app text-foreground">
-      <Nav user={user} onLogin={() => setShowLogin(true)} onLogout={() => { auth.logout(); toast.success("Sesión cerrada"); }} />
+      <Nav user={user} onLogin={() => setShowLogin(true)} onLogout={() => { logout(); toast.success("Sesión cerrada"); }} />
       <LocationBar location={location} onPick={() => setShowLocPicker(true)} onDetect={detectLocation} />
       {user?.isAdmin && <AdminPanel stats={stats} setStats={setStats} events={events} setEvents={setEvents} />}
       <Hero />
@@ -176,13 +172,21 @@ function Index() {
       <Bestsellers favorites={favorites} toggleFav={toggleFav} />
       <SellBanner />
       <TrustSection />
-      <SpotifyBanner />
-      <AppDownloadBanner />
       <SocialFooter />
       <MainFooter />
 
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} onSuccess={(u) => { setShowLogin(false); toast.success(`¡Bienvenido ${u.name}!`); }} onSwitchToRegister={() => { setShowLogin(false); setShowRegister(true); }} />}
-      {showRegister && <RegisterModal onClose={() => setShowRegister(false)} onSuccess={(u) => { setShowRegister(false); toast.success(`¡Bienvenido ${u.name}!`); }} onSwitchToLogin={() => { setShowRegister(false); setShowLogin(true); }} />}
+      {showLogin && (
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onSwitchToRegister={() => { setShowLogin(false); setShowRegister(true); }}
+        />
+      )}
+      {showRegister && (
+        <RegisterModal
+          onClose={() => setShowRegister(false)}
+          onSwitchToLogin={() => { setShowRegister(false); setShowLogin(true); }}
+        />
+      )}
       {showCreate && <CreateEventModal onClose={() => setShowCreate(false)} onPublish={(e) => { setEvents((prev) => [e, ...prev]); setShowCreate(false); toast.success("¡Evento publicado!"); }} />}
       {showLocPicker && <LocationPicker current={location} onClose={() => setShowLocPicker(false)} onPick={(l) => { setLocation(l); setShowLocPicker(false); toast.success(`Ubicación: ${l.name}`); }} />}
     </div>
@@ -190,7 +194,7 @@ function Index() {
 }
 
 // ---------- NAV ----------
-function Nav({ user, onLogin, onLogout }: { user: { name: string; isAdmin: boolean } | null; onLogin: () => void; onLogout: () => void }) {
+function Nav({ user, onLogin, onLogout }: { user: { name: string; isAdmin?: boolean } | null; onLogin: () => void; onLogout: () => void }) {
   const languages = [
     { code: "ES", flag: "🇪🇸", label: "Español" },
     { code: "EN", flag: "🇺🇸", label: "English" },
@@ -217,11 +221,10 @@ function Nav({ user, onLogin, onLogout }: { user: { name: string; isAdmin: boole
   return (
     <header className="sticky top-0 z-40 backdrop-blur-xl bg-black/80 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        <a href="#" className="flex items-center">
-          <span className="text-2xl font-black tracking-tight">
-            <span className="text-white">FastTicket</span>
-            <span className="text-pink">.com</span>
-          </span>
+        <a href="#" className="flex items-baseline gap-0.5 font-extrabold text-xl tracking-tight">
+          <span className="text-white">Fast</span>
+          <span className="text-pink">Ticket</span>
+          <span className="text-muted-foreground font-medium">.com</span>
         </a>
         <div className="flex items-center gap-2">
           <div className="relative">
@@ -240,12 +243,12 @@ function Nav({ user, onLogin, onLogout }: { user: { name: string; isAdmin: boole
           </div>
           {user ? (
             <>
-              <div className="flex items-center gap-2 pr-2">
+              <Link to="/cuenta" className="flex items-center gap-2 pr-2 hover:opacity-80 transition">
                 <div className="w-9 h-9 rounded-full gradient-pink-purple flex items-center justify-center font-bold text-white text-sm">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <span className="hidden sm:inline text-sm text-white font-medium">{user.name}</span>
-              </div>
+              </Link>
               <button onClick={onLogout} className="px-3 py-2 text-sm rounded-lg border border-white/15 hover:border-white/40 text-white flex items-center gap-1.5 transition">
                 <LogOut className="w-4 h-4" /> Salir
               </button>
@@ -476,36 +479,24 @@ function EventsSection({ events, filter, setFilter, favorites, toggleFav }: { ev
 // ---------- HOW IT WORKS ----------
 function HowItWorks() {
   const steps = [
-    { Icon: Search, t: "Encuentra tu evento", d: "Busca por artista, venue o ciudad" },
-    { Icon: Ticket, t: "Elige tus boletos", d: "Selecciona la sección y cantidad" },
-    { Icon: Lock, t: "Paga seguro", d: "Múltiples métodos de pago con encriptación" },
-    { Icon: Zap, t: "Recibe al instante", d: "QR en tu email y app al momento" },
+    { n: "1", Icon: Search, t: "Encuentra tu evento", d: "Busca por artista, venue o ciudad" },
+    { n: "2", Icon: Ticket, t: "Elige tus boletos", d: "Selecciona la sección y cantidad" },
+    { n: "3", Icon: Lock, t: "Paga seguro", d: "Múltiples métodos de pago con encriptación" },
+    { n: "4", Icon: Zap, t: "Recibe al instante", d: "QR en tu email y app al momento" },
   ];
   return (
-    <section className="py-16 bg-black border-y border-white/10">
+    <section className="py-16 bg-black/60 border-y border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <h2 className="text-3xl font-extrabold text-center text-white mb-12">¿Cómo funciona?</h2>
         <div className="grid md:grid-cols-4 gap-8">
-          {steps.map((s, i) => (
-            <div key={i} className="text-center">
-              <div className="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
-                <div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: "radial-gradient(circle, rgba(233,30,140,0.35) 0%, transparent 70%)",
-                  }}
-                />
-                <s.Icon
-                  className="relative z-10 w-10 h-10"
-                  style={{
-                    color: "#E91E8C",
-                    filter: "drop-shadow(0 0 6px rgba(233,30,140,0.8)) drop-shadow(0 0 14px rgba(233,30,140,0.5))",
-                  }}
-                  strokeWidth={1.2}
-                />
+          {steps.map((s) => (
+            <div key={s.n} className="text-center">
+              <div className="w-16 h-16 mx-auto rounded-full gradient-pink-purple flex items-center justify-center text-xl font-bold text-white mb-4">
+                {s.n}
               </div>
-              <h3 className="font-bold text-white mb-1.5">{s.t}</h3>
-              <p className="text-sm text-[#aaaaaa] max-w-[220px] mx-auto">{s.d}</p>
+              <s.Icon className="w-8 h-8 mx-auto mb-2 text-white" strokeWidth={1.5} />
+              <h3 className="font-bold text-white mb-1">{s.t}</h3>
+              <p className="text-sm text-[#aaaaaa]">{s.d}</p>
             </div>
           ))}
         </div>
@@ -657,69 +648,7 @@ function TrustSection() {
   );
 }
 
-// ---------- SPOTIFY BANNER ----------
-function SpotifyBanner() {
-  return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-      <div className="bg-black border border-white/10 rounded-2xl px-6 py-5 flex flex-col md:flex-row items-center gap-4 md:gap-6">
-        <div className="flex items-center gap-3 shrink-0">
-          <svg viewBox="0 0 24 24" className="w-10 h-10" fill="#1DB954" aria-hidden>
-            <path d="M12 0a12 12 0 100 24 12 12 0 000-24zm5.5 17.3a.75.75 0 01-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 11-.33-1.46c4.57-1.04 8.5-.59 11.66 1.34.36.22.47.69.25 1.03zm1.47-3.28a.94.94 0 01-1.29.31c-3.23-1.98-8.15-2.56-11.97-1.4a.94.94 0 11-.55-1.8c4.37-1.33 9.8-.69 13.5 1.6a.94.94 0 01.31 1.29zm.13-3.42c-3.87-2.3-10.27-2.51-13.97-1.39a1.13 1.13 0 11-.66-2.16c4.25-1.29 11.31-1.04 15.78 1.6a1.13 1.13 0 01-1.15 1.95z"/>
-          </svg>
-          <span className="text-white text-xl font-bold">Spotify</span>
-        </div>
-        <div className="flex-1 text-center md:text-left">
-          <p className="text-white font-bold text-base md:text-lg leading-tight">Conecta tu cuenta de Spotify y sincroniza tus artistas favoritos</p>
-          <p className="text-white/70 text-sm mt-1">Descubre eventos de los artistas a los que escuchas</p>
-        </div>
-        <button
-          onClick={() => toast.success("Conectando con Spotify 🎧")}
-          className="shrink-0 px-6 h-11 rounded-full border-2 font-semibold text-sm transition hover:opacity-90"
-          style={{ borderColor: "#1DB954", color: "#1DB954" }}
-        >
-          Conectar Spotify
-        </button>
-      </div>
-    </section>
-  );
-}
-
-// ---------- APP DOWNLOAD BANNER ----------
-function AppDownloadBanner() {
-  return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-10">
-      <div className="rounded-2xl px-6 md:px-10 py-8 flex flex-col md:flex-row items-center gap-6" style={{ background: "linear-gradient(135deg, rgba(233,30,140,0.12), rgba(233,30,140,0.04))", border: "1px solid rgba(233,30,140,0.2)" }}>
-        <div className="flex-1 text-center md:text-left">
-          <div className="flex items-baseline gap-0.5 font-extrabold text-2xl md:text-3xl mb-2 justify-center md:justify-start">
-            <span className="text-white">Descarga la app de </span>
-            <span className="text-white">Fast</span><span className="text-pink">Ticket</span>
-          </div>
-          <p className="text-white/70 text-sm md:text-base">Descubre fácilmente tus eventos favoritos</p>
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <a href="#" className="hover:opacity-90 transition">
-            <img src={badgeAppleWhite} alt="Descargar en App Store" className="h-11 w-auto rounded-xl badge-dark-theme" />
-            <img src={badgeAppleBlack} alt="Descargar en App Store" className="h-11 w-auto rounded-xl badge-light-theme" />
-          </a>
-          <a href="#" className="hover:opacity-90 transition">
-            <img src={badgeGoogleWhite} alt="Disponible en Google Play" className="h-11 w-auto rounded-xl badge-dark-theme" />
-            <img src={badgeGoogleBlack} alt="Disponible en Google Play" className="h-11 w-auto rounded-xl badge-light-theme" />
-          </a>
-          <div className="bg-white p-1.5 rounded-lg">
-            <div className="w-16 h-16 grid grid-cols-8 grid-rows-8 gap-0">
-              {Array.from({ length: 64 }).map((_, i) => {
-                const on = [0,1,2,3,4,5,6,8,14,16,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,49,50,51,55,57,58,59,60,61,62,63].includes(i % 64) || (i * 7) % 5 === 0;
-                return <div key={i} style={{ background: on ? "#000" : "#fff" }} />;
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-
+// ---------- SOCIAL FOOTER ----------
 function SocialFooter() {
   const socials = [
     { i: <Instagram className="w-5 h-5" strokeWidth={1.5} />, l: "Instagram" },
@@ -810,13 +739,19 @@ function MainFooter() {
 
             <h4 className="font-bold text-white mb-3">Descarga nuestras apps</h4>
             <div className="flex gap-2">
-              <a href="#" className="hover:opacity-90 transition flex-1">
-                <img src={badgeAppleWhite} alt="Descargar en App Store" className="h-10 w-auto rounded-lg badge-dark-theme" />
-                <img src={badgeAppleBlack} alt="Descargar en App Store" className="h-10 w-auto rounded-lg badge-light-theme" />
+              <a href="#" className="flex items-center gap-2 px-3 py-2 bg-white text-black rounded-lg hover:opacity-90 transition flex-1">
+                <Apple className="w-6 h-6 fill-black" />
+                <div className="text-left leading-tight">
+                  <div className="text-[9px]">Consíguelo en el</div>
+                  <div className="text-sm font-bold">App Store</div>
+                </div>
               </a>
-              <a href="#" className="hover:opacity-90 transition flex-1">
-                <img src={badgeGoogleWhite} alt="Disponible en Google Play" className="h-10 w-auto rounded-lg badge-dark-theme" />
-                <img src={badgeGoogleBlack} alt="Disponible en Google Play" className="h-10 w-auto rounded-lg badge-light-theme" />
+              <a href="#" className="flex items-center gap-2 px-3 py-2 bg-white text-black rounded-lg hover:opacity-90 transition flex-1">
+                <Play className="w-6 h-6 fill-black" />
+                <div className="text-left leading-tight">
+                  <div className="text-[9px]">Disponible en</div>
+                  <div className="text-sm font-bold">Google Play</div>
+                </div>
               </a>
             </div>
           </div>
@@ -879,73 +814,55 @@ function ModalShell({ onClose, children, maxWidth = "max-w-md" }: { onClose: () 
   );
 }
 
-
-function RememberMe({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
-  return (
-    <label className="flex items-center gap-2 cursor-pointer select-none">
-      <span
-        onClick={() => onChange(!checked)}
-        className={`w-4 h-4 rounded-sm border flex items-center justify-center transition ${checked ? "bg-pink border-pink" : "bg-black/40 border-white/20"}`}
-      >
-        {checked && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
-      </span>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="sr-only" />
-      <span className="text-sm text-[#aaaaaa]">Recuérdame</span>
-    </label>
-  );
-}
-
-function LoginModal({ onClose, onSuccess, onSwitchToRegister }: { onClose: () => void; onSuccess: (u: AuthUser) => void; onSwitchToRegister: () => void }) {
-  const auth = useAuth();
-  const [tab, setTab] = useState<"buyer" | "admin">("buyer");
+function LoginModal({ onClose, onSwitchToRegister }: { onClose: () => void; onSwitchToRegister: () => void }) {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [remember, setRemember] = useState(false);
-  const [spotifyConnected, setSpotifyConnected] = useState(false);
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !pass) {
-      toast.error("Por favor completa todos los campos");
+      toast.error("Ingresa tu correo y contraseña");
       return;
     }
-    const u = auth.login(email, pass, remember);
-    if (!u) {
-      toast.error("Correo o contraseña incorrectos");
-      return;
+    const result = login(email, pass, remember);
+    if (result.success) {
+      toast.success(`¡Bienvenido ${result.user.name}!`);
+      onClose();
+    } else {
+      toast.error(result.error);
     }
-    onSuccess(u);
   };
+
   return (
     <ModalShell onClose={onClose}>
       <h2 className="text-2xl font-extrabold text-white mb-1">Inicia sesión</h2>
       <p className="text-sm text-[#aaaaaa] mb-5">Bienvenido de vuelta a FastTicket</p>
-      <div className="flex bg-black/40 rounded-lg p-1 mb-5">
-        <button onClick={() => setTab("buyer")} className={`flex-1 py-2 text-sm rounded-md transition ${tab === "buyer" ? "bg-pink text-white" : "text-[#aaaaaa]"}`}>Comprador</button>
-        <button onClick={() => setTab("admin")} className={`flex-1 py-2 text-sm rounded-md transition ${tab === "admin" ? "bg-pink text-white" : "text-[#aaaaaa]"}`}>Organizador / Admin</button>
-      </div>
 
       <button
-        onClick={() => { const u = auth.register("Apple User", `apple_${Date.now()}@fastticket.com`, "apple", "", remember); onSuccess(u); }}
+        onClick={() => toast("Inicio de sesión con Apple próximamente", { icon: "🍎" })}
         className="w-full mb-3 py-3 bg-white text-black rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-white/90 transition"
       >
         <Apple className="w-5 h-5 fill-black" /> Sign in with Apple
       </button>
 
-      {tab === "admin" && (
-        <div className="text-xs bg-pink/10 border border-pink/30 rounded-lg p-3 mb-4 text-white/80">
-          Acceso exclusivo para promotores y administradores de FastTicket
-        </div>
-      )}
       <form onSubmit={submit} className="space-y-3">
         <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
         <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Contraseña" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
-        <div className="flex items-center justify-between pt-1">
-          <RememberMe checked={remember} onChange={setRemember} />
-        </div>
+        <label className="flex items-center gap-2 text-sm text-[#aaaaaa] cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+            className="w-4 h-4 rounded border-white/20 bg-black/40 accent-pink cursor-pointer"
+          />
+          Recuérdame
+        </label>
         <button type="submit" className="w-full py-3 bg-pink text-white rounded-lg font-semibold hover:opacity-90 transition">Iniciar sesión</button>
       </form>
 
-      <p className="text-sm text-[#aaaaaa] mt-4 text-center">
+      <p className="text-sm text-[#aaaaaa] text-center mt-4">
         ¿No tienes cuenta?{" "}
         <button onClick={onSwitchToRegister} className="text-pink font-semibold hover:underline">Regístrate</button>
       </p>
@@ -954,74 +871,77 @@ function LoginModal({ onClose, onSuccess, onSwitchToRegister }: { onClose: () =>
         <div className="flex-1 h-px bg-white/10" />o continúa con<div className="flex-1 h-px bg-white/10" />
       </div>
       <div className="grid grid-cols-2 gap-2 mb-3">
-        <button onClick={() => { const u = auth.register("Google User", `google_${Date.now()}@fastticket.com`, "google", "", remember); onSuccess(u); }} className="py-2.5 border border-white/10 rounded-lg text-sm text-white hover:border-white/30 transition">Google</button>
-        <button onClick={() => { const u = auth.register("FB User", `fb_${Date.now()}@fastticket.com`, "fb", "", remember); onSuccess(u); }} className="py-2.5 border border-white/10 rounded-lg text-sm text-white hover:border-white/30 transition">Facebook</button>
+        <button onClick={() => toast("Inicio de sesión con Google próximamente", { icon: "🔎" })} className="py-2.5 border border-white/10 rounded-lg text-sm text-white hover:border-white/30 transition">Google</button>
+        <button onClick={() => toast("Inicio de sesión con Facebook próximamente", { icon: "📘" })} className="py-2.5 border border-white/10 rounded-lg text-sm text-white hover:border-white/30 transition">Facebook</button>
       </div>
 
-      <button
-        onClick={() => { setSpotifyConnected(true); toast.success("Conectado a Spotify 🎧"); }}
-        disabled={spotifyConnected}
-        className={`w-full py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition ${spotifyConnected ? "bg-[#1DB954]/30 text-white/70" : "bg-[#1DB954] text-black hover:opacity-90"}`}
-      >
-        <Music className="w-4 h-4" strokeWidth={2} />
-        {spotifyConnected ? "Spotify conectado" : "Conectar con Spotify"}
-      </button>
-
-      <p className="text-[10px] text-[#777] mt-4 text-center">Demo: ana@example.com / demo123 · admin@fastticket.com / admin123</p>
+      <p className="text-[10px] text-[#777] mt-4 text-center">Demo: ana@example.com / demo123 · Admin: admin@fastticket.com / admin123</p>
     </ModalShell>
   );
 }
 
-function RegisterModal({ onClose, onSuccess, onSwitchToLogin }: { onClose: () => void; onSuccess: (u: AuthUser) => void; onSwitchToLogin: () => void }) {
-  const auth = useAuth();
+function RegisterModal({ onClose, onSwitchToLogin }: { onClose: () => void; onSwitchToLogin: () => void }) {
+  const { register } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [pass, setPass] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
   const [remember, setRemember] = useState(false);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !phone || !pass) {
-      toast.error("Por favor completa todos los campos");
+      toast.error("Completa todos los campos");
       return;
     }
     if (pass.length < 6) {
       toast.error("La contraseña debe tener al menos 6 caracteres");
       return;
     }
-    if (pass !== confirm) {
+    if (pass !== confirmPass) {
       toast.error("Las contraseñas no coinciden");
       return;
     }
-    const u = auth.register(name, email, pass, phone, remember);
-    onSuccess(u);
+    const result = register(name, email, pass, phone, remember);
+    if (result.success) {
+      toast.success(`¡Cuenta creada! Bienvenido ${result.user.name}`);
+      onClose();
+    } else {
+      toast.error(result.error);
+    }
   };
 
   return (
     <ModalShell onClose={onClose}>
       <h2 className="text-2xl font-extrabold text-white mb-1">Crea tu cuenta</h2>
-      <p className="text-sm text-[#aaaaaa] mb-5">Únete a FastTicket en segundos</p>
+      <p className="text-sm text-[#aaaaaa] mb-5">Compra y vende boletos en segundos</p>
+
       <form onSubmit={submit} className="space-y-3">
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nombre completo" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
         <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
         <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="Teléfono" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
         <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Contraseña" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
-        <input value={confirm} onChange={(e) => setConfirm(e.target.value)} type="password" placeholder="Confirmar contraseña" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
-        <div className="pt-1">
-          <RememberMe checked={remember} onChange={setRemember} />
-        </div>
+        <input value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} type="password" placeholder="Confirmar contraseña" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder:text-[#777] outline-none focus:border-pink" />
+        <label className="flex items-center gap-2 text-sm text-[#aaaaaa] cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+            className="w-4 h-4 rounded border-white/20 bg-black/40 accent-pink cursor-pointer"
+          />
+          Recuérdame
+        </label>
         <button type="submit" className="w-full py-3 bg-pink text-white rounded-lg font-semibold hover:opacity-90 transition">Crear cuenta</button>
       </form>
-      <p className="text-sm text-[#aaaaaa] mt-4 text-center">
+
+      <p className="text-sm text-[#aaaaaa] text-center mt-4">
         ¿Ya tienes cuenta?{" "}
         <button onClick={onSwitchToLogin} className="text-pink font-semibold hover:underline">Inicia sesión</button>
       </p>
     </ModalShell>
   );
 }
-
 
 function CreateEventModal({ onClose, onPublish }: { onClose: () => void; onPublish: (e: Event) => void }) {
   const [step, setStep] = useState(1);
