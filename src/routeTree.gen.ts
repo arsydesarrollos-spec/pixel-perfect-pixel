@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventoCaifanesReunionRouteImport } from './routes/evento.caifanes-reunion'
 import { Route as CuentaPasadosRouteImport } from './routes/cuenta.pasados'
 import { Route as CuentaPagosRouteImport } from './routes/cuenta.pagos'
+import { Route as CuentaIdiomaRouteImport } from './routes/cuenta.idioma'
 import { Route as CuentaHistorialRouteImport } from './routes/cuenta.historial'
 import { Route as CuentaFavoritosRouteImport } from './routes/cuenta.favoritos'
 import { Route as CuentaFacturacionRouteImport } from './routes/cuenta.facturacion'
@@ -64,6 +65,11 @@ const CuentaPagosRoute = CuentaPagosRouteImport.update({
   path: '/pagos',
   getParentRoute: () => CuentaRoute,
 } as any)
+const CuentaIdiomaRoute = CuentaIdiomaRouteImport.update({
+  id: '/idioma',
+  path: '/idioma',
+  getParentRoute: () => CuentaRoute,
+} as any)
 const CuentaHistorialRoute = CuentaHistorialRouteImport.update({
   id: '/historial',
   path: '/historial',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/cuenta/facturacion': typeof CuentaFacturacionRoute
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
+  '/cuenta/idioma': typeof CuentaIdiomaRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/cuenta/facturacion': typeof CuentaFacturacionRoute
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
+  '/cuenta/idioma': typeof CuentaIdiomaRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/cuenta/facturacion': typeof CuentaFacturacionRoute
   '/cuenta/favoritos': typeof CuentaFavoritosRoute
   '/cuenta/historial': typeof CuentaHistorialRoute
+  '/cuenta/idioma': typeof CuentaIdiomaRoute
   '/cuenta/pagos': typeof CuentaPagosRoute
   '/cuenta/pasados': typeof CuentaPasadosRoute
   '/evento/caifanes-reunion': typeof EventoCaifanesReunionRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/cuenta/facturacion'
     | '/cuenta/favoritos'
     | '/cuenta/historial'
+    | '/cuenta/idioma'
     | '/cuenta/pagos'
     | '/cuenta/pasados'
     | '/evento/caifanes-reunion'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/cuenta/facturacion'
     | '/cuenta/favoritos'
     | '/cuenta/historial'
+    | '/cuenta/idioma'
     | '/cuenta/pagos'
     | '/cuenta/pasados'
     | '/evento/caifanes-reunion'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/cuenta/facturacion'
     | '/cuenta/favoritos'
     | '/cuenta/historial'
+    | '/cuenta/idioma'
     | '/cuenta/pagos'
     | '/cuenta/pasados'
     | '/evento/caifanes-reunion'
@@ -262,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CuentaPagosRouteImport
       parentRoute: typeof CuentaRoute
     }
+    '/cuenta/idioma': {
+      id: '/cuenta/idioma'
+      path: '/idioma'
+      fullPath: '/cuenta/idioma'
+      preLoaderRoute: typeof CuentaIdiomaRouteImport
+      parentRoute: typeof CuentaRoute
+    }
     '/cuenta/historial': {
       id: '/cuenta/historial'
       path: '/historial'
@@ -314,6 +333,7 @@ interface CuentaRouteChildren {
   CuentaFacturacionRoute: typeof CuentaFacturacionRoute
   CuentaFavoritosRoute: typeof CuentaFavoritosRoute
   CuentaHistorialRoute: typeof CuentaHistorialRoute
+  CuentaIdiomaRoute: typeof CuentaIdiomaRoute
   CuentaPagosRoute: typeof CuentaPagosRoute
   CuentaPasadosRoute: typeof CuentaPasadosRoute
 }
@@ -325,6 +345,7 @@ const CuentaRouteChildren: CuentaRouteChildren = {
   CuentaFacturacionRoute: CuentaFacturacionRoute,
   CuentaFavoritosRoute: CuentaFavoritosRoute,
   CuentaHistorialRoute: CuentaHistorialRoute,
+  CuentaIdiomaRoute: CuentaIdiomaRoute,
   CuentaPagosRoute: CuentaPagosRoute,
   CuentaPasadosRoute: CuentaPasadosRoute,
 }
