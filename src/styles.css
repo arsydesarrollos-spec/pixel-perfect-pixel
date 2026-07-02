@@ -1,0 +1,156 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-purple-deep: var(--purple-deep);
+  --color-purple-card: var(--purple-card);
+  --color-pink: var(--pink);
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.08 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(0.65 0.27 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.18 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.65 0.27 0);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.65 0.27 0);
+  --purple-deep: oklch(0.15 0 0);
+  --purple-card: oklch(0.14 0 0);
+  --pink: oklch(0.65 0.27 0);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .bg-app { background-color: #0a0a0a; }
+  .bg-card-purple { background-color: #1a1a1a; color: #ffffff; }
+  .text-pink { color: #E91E8C; }
+  .bg-pink { background-color: #E91E8C; }
+  .border-pink { border-color: #E91E8C; }
+  .bg-purple { background-color: #1a1a1a; }
+  .border-purple { border-color: #2a2a2a; }
+  .gradient-pink-purple { background: linear-gradient(135deg, #E91E8C 0%, #1a1a1a 100%); }
+  .gradient-radial-hero {
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(233,30,140,0.25), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 60%, rgba(233,30,140,0.18), transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 80%, rgba(255,255,255,0.05), transparent 60%),
+      #0a0a0a;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { scrollbar-width: none; }
+}
+
+/* ===== Light theme overrides ===== */
+html.light {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.15 0 0);
+  --card: oklch(0.97 0 0);
+  --card-foreground: oklch(0.15 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.4 0 0);
+  --border: oklch(0 0 0 / 12%);
+  --input: oklch(0 0 0 / 10%);
+  --purple-deep: oklch(0.97 0 0);
+  --purple-card: oklch(0.96 0 0);
+}
+html.light body { background-color: #ffffff; color: #0a0a0a; }
+
+@layer utilities {
+  html.light .bg-app { background-color: #ffffff; }
+  html.light .bg-card-purple { background-color: #f5f5f5; color: #0a0a0a; }
+  html.light .bg-purple { background-color: #f5f5f5; }
+  html.light .border-purple { border-color: #e5e5e5; }
+  html.light .gradient-radial-hero {
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(233,30,140,0.18), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 60%, rgba(233,30,140,0.12), transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 80%, rgba(0,0,0,0.04), transparent 60%),
+      #ffffff;
+  }
+  html.light .gradient-pink-purple { background: linear-gradient(135deg, #E91E8C 0%, #f5f5f5 100%); }
+}
+
+html.light .text-white { color: #0a0a0a !important; }
+html.light .text-white\/70 { color: rgba(10,10,10,0.7) !important; }
+html.light .text-white\/80 { color: rgba(10,10,10,0.8) !important; }
+html.light .text-white\/90 { color: rgba(10,10,10,0.9) !important; }
+html.light .text-black { color: #0a0a0a !important; }
+html.light .bg-white { background-color: #0a0a0a !important; }
+html.light .bg-white\/5 { background-color: rgba(0,0,0,0.04) !important; }
+html.light .bg-white\/10 { background-color: rgba(0,0,0,0.06) !important; }
+html.light .bg-white\/15 { background-color: rgba(0,0,0,0.08) !important; }
+html.light .bg-white\/90 { background-color: rgba(255,255,255,0.9) !important; }
+html.light .border-white\/5 { border-color: rgba(0,0,0,0.05) !important; }
+html.light .border-white\/10 { border-color: rgba(0,0,0,0.1) !important; }
+html.light .border-white\/15 { border-color: rgba(0,0,0,0.15) !important; }
+html.light .border-white\/30 { border-color: rgba(0,0,0,0.25) !important; }
+html.light .border-white\/40 { border-color: rgba(0,0,0,0.35) !important; }
+html.light .bg-black { background-color: #ffffff !important; }
+html.light .bg-black\/30 { background-color: rgba(255,255,255,0.5) !important; }
+html.light .bg-black\/40 { background-color: rgba(255,255,255,0.6) !important; }
+html.light .bg-black\/50 { background-color: rgba(255,255,255,0.7) !important; }
+html.light .bg-black\/60 { background-color: rgba(255,255,255,0.8) !important; }
+html.light .bg-black\/70 { background-color: rgba(255,255,255,0.85) !important; }
+html.light .bg-black\/80 { background-color: rgba(255,255,255,0.85) !important; }
+
+/* App store badge theme toggles */
+.badge-dark-theme { display: inline-block; }
+.badge-light-theme { display: none; }
+html.light .badge-dark-theme { display: none; }
+html.light .badge-light-theme { display: inline-block; }
