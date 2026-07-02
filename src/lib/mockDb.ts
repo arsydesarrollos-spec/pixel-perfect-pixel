@@ -8,6 +8,10 @@ export type MockUser = {
   password: string; // plaintext only in mock DB — never exposed to the client
   phone: string;
   isAdmin?: boolean;
+  photo?: string; // data URL for uploaded avatar
+  address?: string;
+  location?: string;
+  credits?: number;
 };
 
 export type MockTicket = {
@@ -43,6 +47,15 @@ export type MockFavorite = {
   price: number;
 };
 
+export type MockBillingAddress = {
+  id: string;
+  userEmail: string;
+  address: string;
+  city: string;
+  country: string;
+  zip: string;
+};
+
 function makeTicketCode() {
   return Math.random().toString(36).slice(2, 10).toUpperCase();
 }
@@ -54,6 +67,9 @@ export const mockUsers: MockUser[] = [
     email: "ana@example.com",
     password: "demo123",
     phone: "6622345678",
+    address: "Av. Reforma 123, Col. Centro",
+    location: "CDMX, México",
+    credits: 250,
   },
   {
     id: "u2",
@@ -180,5 +196,16 @@ export const mockFavorites: MockFavorite[] = [
     date: "3 Ago 2026",
     venue: "Pepsi Center, CDMX",
     price: 1350,
+  },
+];
+
+export const mockBillingAddresses: MockBillingAddress[] = [
+  {
+    id: "ba1",
+    userEmail: "ana@example.com",
+    address: "Av. Reforma 123, Col. Centro",
+    city: "CDMX",
+    country: "México",
+    zip: "06000",
   },
 ];
