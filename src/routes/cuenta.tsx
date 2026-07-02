@@ -18,6 +18,7 @@ const GROUPS: Group[] = [
     tabs: [
       { to: "/cuenta/boletos", label: "Próximos eventos", sub: true },
       { to: "/cuenta/pasados", label: "Eventos pasados", sub: true },
+      { to: "/cuenta/ventas", label: "Mis ventas", sub: true },
     ],
   },
   { tabs: [{ to: "/cuenta/historial", label: "Historial" }] },
