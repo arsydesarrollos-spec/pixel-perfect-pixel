@@ -83,14 +83,14 @@ const ESlugRoute = ESlugRouteImport.update({
   path: '/e/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CuentaVentasRoute = CuentaVentasRouteImport.update({
-  id: '/ventas',
-  path: '/ventas',
-  getParentRoute: () => CuentaRoute,
-} as any)
 const CuentaWhatsappRoute = CuentaWhatsappRouteImport.update({
   id: '/whatsapp',
   path: '/whatsapp',
+  getParentRoute: () => CuentaRoute,
+} as any)
+const CuentaVentasRoute = CuentaVentasRouteImport.update({
+  id: '/ventas',
+  path: '/ventas',
   getParentRoute: () => CuentaRoute,
 } as any)
 const CuentaRedesRoute = CuentaRedesRouteImport.update({
@@ -374,13 +374,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/e/$slug': {
-      id: '/e/$slug'
-      path: '/e/$slug'
-      fullPath: '/e/$slug'
-      preLoaderRoute: typeof ESlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/evento/caifanes-reunion': {
       id: '/evento/caifanes-reunion'
       path: '/evento/caifanes-reunion'
@@ -388,18 +381,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventoCaifanesReunionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/cuenta/ventas': {
-      id: '/cuenta/ventas'
-      path: '/ventas'
-      fullPath: '/cuenta/ventas'
-      preLoaderRoute: typeof CuentaVentasRouteImport
-      parentRoute: typeof CuentaRoute
+    '/e/$slug': {
+      id: '/e/$slug'
+      path: '/e/$slug'
+      fullPath: '/e/$slug'
+      preLoaderRoute: typeof ESlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/cuenta/whatsapp': {
       id: '/cuenta/whatsapp'
       path: '/whatsapp'
       fullPath: '/cuenta/whatsapp'
       preLoaderRoute: typeof CuentaWhatsappRouteImport
+      parentRoute: typeof CuentaRoute
+    }
+    '/cuenta/ventas': {
+      id: '/cuenta/ventas'
+      path: '/ventas'
+      fullPath: '/cuenta/ventas'
+      preLoaderRoute: typeof CuentaVentasRouteImport
       parentRoute: typeof CuentaRoute
     }
     '/cuenta/redes': {
@@ -532,3 +532,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
