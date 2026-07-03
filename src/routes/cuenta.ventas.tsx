@@ -11,7 +11,7 @@ import { useAuth } from "@/lib/auth";
 import { useListings, sellerFees, type Listing } from "@/lib/listings";
 
 export const Route = createFileRoute("/cuenta/ventas")({
-  head: () => ({ meta: [{ title: "Mis ventas | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Mis ventas | Fastickett.com" }] }),
   component: VentasTab,
 });
 

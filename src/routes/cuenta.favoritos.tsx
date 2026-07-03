@@ -7,7 +7,7 @@ import { mockFavorites } from "@/lib/mockDb";
 import { EmptyState } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/cuenta/favoritos")({
-  head: () => ({ meta: [{ title: "Favoritos | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Favoritos | Fastickett.com" }] }),
   component: FavoritosTab,
 });
 

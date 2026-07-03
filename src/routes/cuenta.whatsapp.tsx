@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/cuenta/whatsapp")({
-  head: () => ({ meta: [{ title: "WhatsApp | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "WhatsApp | Fastickett.com" }] }),
   component: WhatsAppTab,
 });
 

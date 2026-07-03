@@ -19,7 +19,7 @@ import { fees } from "@/lib/cart";
 export const Route = createFileRoute("/vender")({
   head: () => ({
     meta: [
-      { title: "Vende tus boletos | FastTicket.com" },
+      { title: "Vende tus boletos | Fastickett.com" },
       { name: "description", content: "Publica tus boletos en minutos con comisión transparente del 10%. Sin cargos ocultos." },
     ],
   }),
@@ -111,7 +111,7 @@ function VenderPage() {
           <ChevronLeft className="w-4 h-4" /> Volver
         </Link>
         <Link to="/" className="text-xl font-black">
-          FastTicket<span className="text-pink">.com</span>
+          Fastickett<span className="text-pink">.com</span>
         </Link>
         <Link to="/reventa" className="text-sm flex items-center gap-2 hover:text-pink transition">
           <Ticket className="w-4 h-4" /> Ver reventa
@@ -196,7 +196,7 @@ function VenderPage() {
             </div>
             <div className="bg-pink/10 border border-pink/30 rounded-xl p-4 flex gap-3 text-xs">
               <ShieldCheck className="w-5 h-5 text-pink shrink-0 mt-0.5" />
-              <p className="text-gray-300">Los boletos verificados se venden hasta 3 veces más rápido. FastTicket valida el código contra el emisor original antes de aprobar la publicación.</p>
+              <p className="text-gray-300">Los boletos verificados se venden hasta 3 veces más rápido. Fastickett valida el código contra el emisor original antes de aprobar la publicación.</p>
             </div>
           </section>
         )}
@@ -220,7 +220,7 @@ function VenderPage() {
             {/* Calculadora en vivo: el corazón de la transparencia */}
             <div className="bg-app border border-white/10 rounded-xl p-4 space-y-2 text-sm">
               <div className="flex justify-between"><span className="text-gray-400">Precio por boleto</span><span>${priceNum.toLocaleString()}</span></div>
-              <div className="flex justify-between"><span className="text-gray-400">Comisión FastTicket ({Math.round(SELLER_COMMISSION * 100)}%)</span><span className="text-gray-300">−${seller.commission.toLocaleString()}</span></div>
+              <div className="flex justify-between"><span className="text-gray-400">Comisión Fastickett ({Math.round(SELLER_COMMISSION * 100)}%)</span><span className="text-gray-300">−${seller.commission.toLocaleString()}</span></div>
               <div className="h-px bg-white/10 my-2" />
               <div className="flex justify-between font-black text-base">
                 <span>Tú recibes por boleto</span>
@@ -242,7 +242,7 @@ function VenderPage() {
             <div className="flex gap-3 bg-pink/10 border border-pink/30 rounded-xl p-4 text-xs">
               <TrendingDown className="w-5 h-5 text-pink shrink-0 mt-0.5" />
               <p className="text-gray-300">
-                <strong className="text-white">Ventaja FastTicket:</strong> otras plataformas cobran hasta 25% de comisión y la revelan hasta el final. Aquí tú y tu comprador ven todos los cargos desde el primer momento.
+                <strong className="text-white">Ventaja Fastickett:</strong> otras plataformas cobran hasta 25% de comisión y la revelan hasta el final. Aquí tú y tu comprador ven todos los cargos desde el primer momento.
               </p>
             </div>
           </section>

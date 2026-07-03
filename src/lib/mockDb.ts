@@ -81,7 +81,7 @@ export const mockUsers: MockUser[] = [
   {
     id: "u3",
     name: "Admin",
-    email: "admin@fastticket.com",
+    email: "admin@fastickett.com",
     password: "admin123",
     phone: "6622348169",
     isAdmin: true,

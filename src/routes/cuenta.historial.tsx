@@ -6,7 +6,7 @@ import { mockOrders, type MockOrder } from "@/lib/mockDb";
 import { EmptyState } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/cuenta/historial")({
-  head: () => ({ meta: [{ title: "Historial | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Historial | Fastickett.com" }] }),
   component: HistorialTab,
 });
 

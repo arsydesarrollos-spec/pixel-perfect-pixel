@@ -3,7 +3,7 @@ import { Trash2, Plus, Minus, ChevronLeft, ShoppingBag, Calendar, MapPin } from 
 import { useCart, fees } from "@/lib/cart";
 
 export const Route = createFileRoute("/carrito")({
-  head: () => ({ meta: [{ title: "Carrito | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Carrito | Fastickett.com" }] }),
   component: CartPage,
 });
 
@@ -15,7 +15,7 @@ function CartPage() {
     <div className="min-h-screen bg-app text-white">
       <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 text-sm hover:text-pink"><ChevronLeft className="w-4 h-4" /> Seguir comprando</Link>
-        <Link to="/" className="text-xl font-black">FastTicket<span className="text-pink">.com</span></Link>
+        <Link to="/" className="text-xl font-black">Fastickett<span className="text-pink">.com</span></Link>
         <div className="w-32" />
       </header>
 

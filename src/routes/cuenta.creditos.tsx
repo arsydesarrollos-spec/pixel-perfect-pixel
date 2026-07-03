@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/cuenta/creditos")({
-  head: () => ({ meta: [{ title: "Créditos | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Créditos | Fastickett.com" }] }),
   component: CreditosTab,
 });
 

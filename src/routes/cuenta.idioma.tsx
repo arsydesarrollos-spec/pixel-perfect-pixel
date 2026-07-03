@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/cuenta/idioma")({
-  head: () => ({ meta: [{ title: "Idioma | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Idioma | Fastickett.com" }] }),
   component: IdiomaTab,
 });
 
@@ -26,7 +26,7 @@ function IdiomaTab() {
     <div>
       <h2 className="text-2xl font-black mb-1">Idioma</h2>
       <p className="text-sm text-gray-400 mb-6">
-        Elige el idioma en el que quieres ver FastTicket
+        Elige el idioma en el que quieres ver Fastickett
       </p>
 
       <div className="bg-card-purple border border-white/10 rounded-2xl overflow-hidden max-w-lg">

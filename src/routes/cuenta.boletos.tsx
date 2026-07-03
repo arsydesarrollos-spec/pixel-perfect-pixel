@@ -5,7 +5,7 @@ import { BoletosList } from "@/components/BoletosList";
 import { EmptyState } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/cuenta/boletos")({
-  head: () => ({ meta: [{ title: "Próximos eventos | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Próximos eventos | Fastickett.com" }] }),
   component: ProximosTab,
 });
 

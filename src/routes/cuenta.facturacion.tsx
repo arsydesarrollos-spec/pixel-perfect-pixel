@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { mockBillingAddresses, type MockBillingAddress } from "@/lib/mockDb";
 
 export const Route = createFileRoute("/cuenta/facturacion")({
-  head: () => ({ meta: [{ title: "Facturación | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Facturación | Fastickett.com" }] }),
   component: FacturacionTab,
 });
 

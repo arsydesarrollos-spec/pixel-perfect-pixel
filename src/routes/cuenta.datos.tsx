@@ -5,7 +5,7 @@ import { Trash2 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/cuenta/datos")({
-  head: () => ({ meta: [{ title: "Datos personales | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Datos personales | Fastickett.com" }] }),
   component: DatosTab,
 });
 

@@ -5,7 +5,7 @@ import { LogOut, ChevronLeft } from "lucide-react";
 import { useAuth, requestLogin } from "@/lib/auth";
 
 export const Route = createFileRoute("/cuenta")({
-  head: () => ({ meta: [{ title: "Mi cuenta | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Mi cuenta | Fastickett.com" }] }),
   component: CuentaLayout,
 });
 
@@ -92,7 +92,7 @@ function CuentaLayout() {
           <ChevronLeft className="w-4 h-4" /> Volver
         </Link>
         <Link to="/" className="text-xl font-black">
-          FastTicket<span className="text-pink">.com</span>
+          Fastickett<span className="text-pink">.com</span>
         </Link>
         <div className="w-16" />
       </header>

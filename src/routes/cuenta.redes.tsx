@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/cuenta/redes")({
-  head: () => ({ meta: [{ title: "Redes sociales | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Redes sociales | Fastickett.com" }] }),
   component: RedesTab,
 });
 
 const NETS = [
-  { name: "Instagram", user: "@fastticket", url: "https://instagram.com", emoji: "📸", bg: "from-pink-500 to-purple-600" },
-  { name: "TikTok", user: "@fastticket", url: "https://tiktok.com", emoji: "🎵", bg: "from-slate-800 to-black" },
-  { name: "X / Twitter", user: "@fastticket", url: "https://x.com", emoji: "𝕏", bg: "from-slate-700 to-slate-900" },
-  { name: "Facebook", user: "FastTicket", url: "https://facebook.com", emoji: "👥", bg: "from-blue-500 to-blue-700" },
+  { name: "Instagram", user: "@fastickett", url: "https://instagram.com", emoji: "📸", bg: "from-pink-500 to-purple-600" },
+  { name: "TikTok", user: "@fastickett", url: "https://tiktok.com", emoji: "🎵", bg: "from-slate-800 to-black" },
+  { name: "X / Twitter", user: "@fastickett", url: "https://x.com", emoji: "𝕏", bg: "from-slate-700 to-slate-900" },
+  { name: "Facebook", user: "Fastickett", url: "https://facebook.com", emoji: "👥", bg: "from-blue-500 to-blue-700" },
 ];
 
 function RedesTab() {

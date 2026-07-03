@@ -4,7 +4,7 @@ import { CheckCircle2, Mail, Ticket, Download, Home } from "lucide-react";
 
 export const Route = createFileRoute("/gracias")({
   validateSearch: (s: Record<string, unknown>) => ({ order: (s.order as string) || "" }),
-  head: () => ({ meta: [{ title: "¡Gracias por tu compra! | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "¡Gracias por tu compra! | Fastickett.com" }] }),
   component: ThankYouPage,
 });
 
@@ -31,7 +31,7 @@ function ThankYouPage() {
   return (
     <div className="min-h-screen bg-app text-white">
       <header className="border-b border-white/10 px-6 py-4">
-        <Link to="/" className="text-xl font-black">FastTicket<span className="text-pink">.com</span></Link>
+        <Link to="/" className="text-xl font-black">Fastickett<span className="text-pink">.com</span></Link>
       </header>
 
       <div className="max-w-3xl mx-auto px-6 py-12">

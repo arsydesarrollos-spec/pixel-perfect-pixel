@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/cuenta/notificaciones")({
-  head: () => ({ meta: [{ title: "Notificaciones | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Notificaciones | Fastickett.com" }] }),
   component: NotifTab,
 });
 

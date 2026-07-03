@@ -18,7 +18,7 @@ import { useListings, type Listing } from "@/lib/listings";
 export const Route = createFileRoute("/reventa")({
   head: () => ({
     meta: [
-      { title: "Reventa verificada | FastTicket.com" },
+      { title: "Reventa verificada | Fastickett.com" },
       { name: "description", content: "Boletos de otros fans con verificación anti-fraude y precio total transparente desde el inicio." },
     ],
   }),
@@ -78,7 +78,7 @@ function ReventaPage() {
           <ChevronLeft className="w-4 h-4" /> Volver
         </Link>
         <Link to="/" className="text-xl font-black">
-          FastTicket<span className="text-pink">.com</span>
+          Fastickett<span className="text-pink">.com</span>
         </Link>
         <Link to="/carrito" className="text-sm flex items-center gap-2 hover:text-pink transition">
           <Ticket className="w-4 h-4" /> Carrito ({cart.count})
@@ -100,7 +100,7 @@ function ReventaPage() {
         <div className="flex gap-3 bg-pink/10 border border-pink/30 rounded-xl p-4 text-xs mb-8 mt-4">
           <ShieldCheck className="w-5 h-5 text-pink shrink-0 mt-0.5" />
           <p className="text-gray-300">
-            <strong className="text-white">Garantía FastTicket:</strong> si un boleto de reventa resulta inválido,
+            <strong className="text-white">Garantía Fastickett:</strong> si un boleto de reventa resulta inválido,
             te reembolsamos el 100% o te conseguimos uno equivalente. El pago al vendedor se libera 48 h después del evento.
           </p>
         </div>

@@ -160,7 +160,7 @@ export function TicketModal({ order, index, onIndexChange, onClose }: Props) {
 
           <div className="flex items-start justify-between relative">
             <div className="text-sm font-black text-white">
-              FastTicket<span className="text-white/70">.com</span>
+              Fastickett<span className="text-white/70">.com</span>
             </div>
             <button
               onClick={onClose}

@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { CreditCard, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/cuenta/pagos")({
-  head: () => ({ meta: [{ title: "Métodos de pago | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Métodos de pago | Fastickett.com" }] }),
   component: PagosTab,
 });
 

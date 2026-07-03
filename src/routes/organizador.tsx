@@ -20,8 +20,8 @@ import {
 export const Route = createFileRoute("/organizador")({
   head: () => ({
     meta: [
-      { title: "Panel de Organizador | FastTicket.com" },
-      { name: "description", content: "Crea tu evento y véndelo en FastTicket con comisión transparente del 5%." },
+      { title: "Panel de Organizador | Fastickett.com" },
+      { name: "description", content: "Crea tu evento y véndelo en Fastickett con comisión transparente del 5%." },
     ],
   }),
   component: OrganizadorPage,
@@ -66,7 +66,7 @@ function OrganizadorPage() {
           <ChevronLeft className="w-4 h-4" /> Volver
         </Link>
         <Link to="/" className="text-xl font-black">
-          FastTicket<span className="text-pink">.com</span>
+          Fastickett<span className="text-pink">.com</span>
         </Link>
         <div className="w-16" />
       </header>
@@ -349,7 +349,7 @@ function CreateEventWizard({ organizerEmail, organizerName, onDone }: {
               </button>
             </div>
           ))}
-          <p className="text-[11px] text-gray-500">Precio en MXN por boleto. La comisión FastTicket del {Math.round(ORGANIZER_COMMISSION * 100)}% se descuenta de tus ingresos, no se suma al comprador de tu parte.</p>
+          <p className="text-[11px] text-gray-500">Precio en MXN por boleto. La comisión Fastickett del {Math.round(ORGANIZER_COMMISSION * 100)}% se descuenta de tus ingresos, no se suma al comprador de tu parte.</p>
         </section>
       )}
 

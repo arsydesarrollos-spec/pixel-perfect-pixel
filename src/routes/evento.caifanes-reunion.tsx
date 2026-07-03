@@ -9,8 +9,8 @@ import { SeatMap } from "@/components/SeatMap";
 export const Route = createFileRoute("/evento/caifanes-reunion")({
   head: () => ({
     meta: [
-      { title: "Caifanes — Reunión | FastTicket.com" },
-      { name: "description", content: "Boletos para Caifanes Reunión en Foro Sol (Estadio GNP Seguros), CDMX. Compra segura con FastTicket.com." },
+      { title: "Caifanes — Reunión | Fastickett.com" },
+      { name: "description", content: "Boletos para Caifanes Reunión en Foro Sol (Estadio GNP Seguros), CDMX. Compra segura con Fastickett.com." },
     ],
   }),
   component: ProductPage,
@@ -71,7 +71,7 @@ function ProductPage() {
           <ChevronLeft className="w-4 h-4" /> Volver
         </Link>
         <Link to="/" className="text-xl font-black">
-          FastTicket<span className="text-pink">.com</span>
+          Fastickett<span className="text-pink">.com</span>
         </Link>
         <Link to="/carrito" className="text-sm flex items-center gap-2 hover:text-pink transition">
           <Ticket className="w-4 h-4" /> Carrito ({cart.count})
@@ -141,7 +141,7 @@ function ProductPage() {
 
             <div className="mt-4 flex items-center gap-2 text-xs text-gray-400">
               <ShieldCheck className="w-4 h-4 text-pink" />
-              Compra 100% segura · Garantía FastTicket
+              Compra 100% segura · Garantía Fastickett
             </div>
           </div>
         </div>

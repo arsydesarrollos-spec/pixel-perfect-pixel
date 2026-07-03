@@ -5,7 +5,7 @@ import { ChevronLeft, Lock, CreditCard, ShieldCheck } from "lucide-react";
 import { useCart, fees } from "@/lib/cart";
 
 export const Route = createFileRoute("/checkout")({
-  head: () => ({ meta: [{ title: "Checkout | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Checkout | Fastickett.com" }] }),
   component: CheckoutPage,
 });
 
@@ -65,7 +65,7 @@ function CheckoutPage() {
     <div className="min-h-screen bg-app text-white">
       <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
         <Link to="/carrito" className="flex items-center gap-2 text-sm hover:text-pink"><ChevronLeft className="w-4 h-4" /> Volver al carrito</Link>
-        <Link to="/" className="text-xl font-black">FastTicket<span className="text-pink">.com</span></Link>
+        <Link to="/" className="text-xl font-black">Fastickett<span className="text-pink">.com</span></Link>
         <div className="flex items-center gap-1 text-xs text-gray-400"><Lock className="w-3 h-3" /> Pago seguro</div>
       </header>
 

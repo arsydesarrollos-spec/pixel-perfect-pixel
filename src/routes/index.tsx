@@ -223,7 +223,7 @@ function Nav({ user, onLogin, onLogout }: { user: { name: string; isAdmin?: bool
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         <a href="#" className="flex items-baseline gap-0.5 font-extrabold text-xl tracking-tight">
           <span className="text-white">Fast</span>
-          <span className="text-pink">Ticket</span>
+          <span className="text-pink">ickett</span>
           <span className="text-muted-foreground font-medium">.com</span>
         </a>
         <div className="flex items-center gap-2">
@@ -683,7 +683,7 @@ function MainFooter() {
   const empresa = ["Sobre nosotros", "Distribución abierta", "Programa de Afiliados", "Inversionistas", "Sala de prensa", "Empleos"];
   const ayudarte = ["Centro de Ayuda / Contacto", "Mi cuenta", "Política de reembolso y cancelación", "Facturación"];
   
-  const bottomLinks = ["SuperFan", "Términos y condiciones", "Acerca de nosotros", "Legales y Seguridad", "Preguntas frecuentes", "Tu evento en FastTicket", "Envíos por enviatodo.com"];
+  const bottomLinks = ["SuperFan", "Términos y condiciones", "Acerca de nosotros", "Legales y Seguridad", "Preguntas frecuentes", "Tu evento en Fastickett", "Envíos por enviatodo.com"];
 
   return (
     <footer className="bg-black border-t border-white/10 pt-14 pb-6">
@@ -692,12 +692,12 @@ function MainFooter() {
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-10 mb-10">
           <div>
             <div className="flex items-baseline gap-0.5 font-extrabold text-xl mb-3">
-              <span className="text-white">Fast</span><span className="text-pink">Ticket</span><span className="text-muted-foreground font-medium">.com</span>
+              <span className="text-white">Fast</span><span className="text-pink">ickett</span><span className="text-muted-foreground font-medium">.com</span>
             </div>
             <p className="text-sm text-[#aaaaaa] mb-5">El marketplace de boletos más confiable de México y Latinoamérica.</p>
             <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card-purple border border-pink/30 mb-4">
               <ShieldCheck className="w-5 h-5 text-pink" strokeWidth={1.5} />
-              <span className="text-sm font-bold text-white">FastTicket <span className="text-pink">guarantee</span></span>
+              <span className="text-sm font-bold text-white">Fastickett <span className="text-pink">guarantee</span></span>
             </div>
             <ul className="space-y-2">
               {guarantees.map((g) => (
@@ -774,7 +774,7 @@ function MainFooter() {
             </h4>
             <p className="text-sm text-[#cfcfcf] leading-relaxed">
               +52 66 22 8169 94 y +52 66 2348 9566<br />
-              <a href="mailto:boletos@fastticket.com.mx" className="text-pink hover:underline">boletos@fastticket.com.mx</a>
+              <a href="mailto:boletos@fastickett.com.mx" className="text-pink hover:underline">boletos@fastickett.com.mx</a>
             </p>
           </div>
         </div>
@@ -788,7 +788,7 @@ function MainFooter() {
 
         {/* Copyright */}
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#888]">
-          <p>Derechos reservados © FastTicket 2026 — <a href="#" className="hover:text-pink underline">Datos de la Empresa</a></p>
+          <p>Derechos reservados © Fastickett 2026 — <a href="#" className="hover:text-pink underline">Datos de la Empresa</a></p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-white">ES</a>
             <a href="#" className="hover:text-white">EN</a>
@@ -838,7 +838,7 @@ function LoginModal({ onClose, onSwitchToRegister }: { onClose: () => void; onSw
   return (
     <ModalShell onClose={onClose}>
       <h2 className="text-2xl font-extrabold text-white mb-1">Inicia sesión</h2>
-      <p className="text-sm text-[#aaaaaa] mb-5">Bienvenido de vuelta a FastTicket</p>
+      <p className="text-sm text-[#aaaaaa] mb-5">Bienvenido de vuelta a Fastickett</p>
 
       <button
         onClick={() => toast("Inicio de sesión con Apple próximamente", { icon: "🍎" })}
@@ -875,7 +875,7 @@ function LoginModal({ onClose, onSwitchToRegister }: { onClose: () => void; onSw
         <button onClick={() => toast("Inicio de sesión con Facebook próximamente", { icon: "📘" })} className="py-2.5 border border-white/10 rounded-lg text-sm text-white hover:border-white/30 transition">Facebook</button>
       </div>
 
-      <p className="text-[10px] text-[#777] mt-4 text-center">Demo: ana@example.com / demo123 · Admin: admin@fastticket.com / admin123</p>
+      <p className="text-[10px] text-[#777] mt-4 text-center">Demo: ana@example.com / demo123 · Admin: admin@fastickett.com / admin123</p>
     </ModalShell>
   );
 }

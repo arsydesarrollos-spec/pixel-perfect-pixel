@@ -1,7 +1,7 @@
 // ============================================================================
 // LISTINGS — Modelo unificado de boletos en venta
 // ----------------------------------------------------------------------------
-// DECISIÓN DE ARQUITECTURA: los 4 sistemas de FastTicket (venta oficial,
+// DECISIÓN DE ARQUITECTURA: los 4 sistemas de Fastickett (venta oficial,
 // reventa de usuarios, boleteras externas y organizadores) comparten este
 // único modelo `Listing`, diferenciado por el campo `source`. Así el buscador,
 // las tarjetas y el checkout funcionan igual para las 4 fuentes.
@@ -35,7 +35,7 @@ export type Listing = {
 };
 
 // ---------- COMISIÓN DEL VENDEDOR (transparente) ----------
-// FastTicket cobra 10% al vendedor. Viagogo cobra hasta 25% y lo oculta.
+// Fastickett cobra 10% al vendedor. Viagogo cobra hasta 25% y lo oculta.
 export const SELLER_COMMISSION = 0.1;
 
 /** Desglose transparente para el vendedor: comisión y cuánto recibe. */

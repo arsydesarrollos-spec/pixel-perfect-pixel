@@ -1,7 +1,7 @@
 // ============================================================================
 // /e/$slug — Página pública dinámica de evento (Sistemas 1 y 4)
 // ----------------------------------------------------------------------------
-// Primera ruta dinámica de FastTicket: renderiza CUALQUIER evento creado por
+// Primera ruta dinámica de Fastickett: renderiza CUALQUIER evento creado por
 // un organizador a partir de su slug en la URL. Selección de zona, cantidad,
 // compra hacia el carrito existente y descuento de inventario en vivo.
 // ============================================================================
@@ -15,7 +15,7 @@ import { useCart } from "@/lib/cart";
 import { useOrganizerEvents } from "@/lib/organizerEvents";
 
 export const Route = createFileRoute("/e/$slug")({
-  head: () => ({ meta: [{ title: "Evento | FastTicket.com" }] }),
+  head: () => ({ meta: [{ title: "Evento | Fastickett.com" }] }),
   component: DynamicEventPage,
 });
 
@@ -84,7 +84,7 @@ function DynamicEventPage() {
           <ChevronLeft className="w-4 h-4" /> Volver
         </Link>
         <Link to="/" className="text-xl font-black">
-          FastTicket<span className="text-pink">.com</span>
+          Fastickett<span className="text-pink">.com</span>
         </Link>
         <Link to="/carrito" className="text-sm flex items-center gap-2 hover:text-pink transition">
           <Ticket className="w-4 h-4" /> Carrito ({cart.count})
@@ -179,7 +179,7 @@ function DynamicEventPage() {
 
           <div className="mt-4 flex items-center gap-2 text-xs text-gray-400">
             <ShieldCheck className="w-4 h-4 text-pink" />
-            Compra 100% segura · Garantía FastTicket
+            Compra 100% segura · Garantía Fastickett
           </div>
         </div>
       </div>

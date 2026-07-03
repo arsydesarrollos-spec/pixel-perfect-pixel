@@ -41,7 +41,7 @@ export type OrganizerEvent = {
 // ---------- COMISIÓN DEL ORGANIZADOR (transparente) ----------
 export const ORGANIZER_COMMISSION = 0.05;
 
-/** Desglose por boleto: comisión FastTicket y cuánto recibe el organizador. */
+/** Desglose por boleto: comisión Fastickett y cuánto recibe el organizador. */
 export function organizerFees(price: number) {
   const commission = Math.round(price * ORGANIZER_COMMISSION);
   return { commission, payout: price - commission };
