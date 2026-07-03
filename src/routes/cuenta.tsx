@@ -30,7 +30,13 @@ const GROUPS: Group[] = [
     ],
   },
   { tabs: [{ to: "/cuenta/facturacion", label: "Facturación" }] },
-  { tabs: [{ to: "/cuenta/pagos", label: "Métodos de pago" }] },
+ { tabs: [{ to: "/cuenta/pagos", label: "Métodos de pago" }] },
+  {
+    label: "Organizador",
+    tabs: [
+      { to: "/organizador", label: "Panel de organizador", sub: true },
+    ],
+  },
   {
     label: "Configuración",
     tabs: [
